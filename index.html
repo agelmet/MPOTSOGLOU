@@ -10,6 +10,16 @@
     <meta name="author" content="Advon Media">
     <meta name="robots" content="index, follow">
     
+    <!-- Google Analytics 4 -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YJ869JS97R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-YJ869JS97R');
+    </script>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -843,6 +853,11 @@
                     if (res.ok) {
                         form.classList.add('hidden');
                         success.classList.remove('hidden');
+                        if (window.gtag) gtag('event', 'generate_lead', {
+                            method: 'Φόρμα ενδιαφέροντος',
+                            subject: (form.querySelector('#if-subject') || {}).value || '',
+                            mode: (form.querySelector('#if-mode') || {}).value || ''
+                        });
                         lucide.createIcons();
                         success.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         return;
@@ -860,6 +875,18 @@
             });
         })();
  
+        // 1c. The three things worth counting in Analytics: a lead, a call, a booking
+        document.addEventListener('click', function (e) {
+            var a = e.target.closest && e.target.closest('a');
+            if (!a || !window.gtag) return;
+            var href = a.getAttribute('href') || '';
+            if (href.indexOf('tel:') === 0) {
+                gtag('event', 'contact', { method: 'phone', value_text: href.replace('tel:', '') });
+            } else if (href.indexOf('doctoranytime.gr') > -1) {
+                gtag('event', 'begin_checkout', { method: 'Doctoranytime', items: [{ item_name: 'Ραντεβού' }] });
+            }
+        }, true);
+
         // 2. Mobile Menu Toggle
         const mobileBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
