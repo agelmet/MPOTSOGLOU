@@ -75,6 +75,22 @@
     </script>
  
     <style>
+        /* Interest form fields */
+        .lux-input{
+            width:100%; background:#f8f9fa; border:1px solid #e9ecef; border-radius:1rem;
+            padding:0.95rem 1.15rem; font-size:0.95rem; font-weight:300; color:#212529;
+            transition:border-color .25s ease, background-color .25s ease, box-shadow .25s ease;
+        }
+        .lux-input::placeholder{ color:#adb5bd; }
+        .lux-input:focus{
+            outline:none; background:#fff; border-color:#8a817c;
+            box-shadow:0 0 0 4px rgba(138,129,124,.10);
+        }
+        .lux-input:user-invalid{ border-color:#c98b8b; }
+        select.lux-input{ appearance:none; cursor:pointer;
+            background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%238a817c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E");
+            background-repeat:no-repeat; background-position:right 1.1rem center; padding-right:2.75rem;
+        }
         /* Smooth Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f8f9fa; }
@@ -634,8 +650,98 @@
         </div>
     </section>
  
+
+    <!-- Interest / Contact Form -->
+    <section id="contact" class="py-28 md:py-36 bg-lux-50 border-t border-lux-100 relative overflow-hidden">
+        <div class="absolute -top-32 -right-32 w-96 h-96 bg-lux-200/40 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="max-w-3xl mx-auto px-6 relative z-10">
+
+            <div class="text-center mb-14 reveal">
+                <span class="text-xs font-bold text-lux-taupe uppercase tracking-[0.25em]">Φορμα Ενδιαφεροντος</span>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-lux-900 mt-5 mb-6 leading-tight">Ας κάνουμε το πρώτο βήμα μαζί</h2>
+                <p class="text-lux-600 font-light leading-relaxed max-w-xl mx-auto">
+                    Συμπληρώστε τα στοιχεία σας και θα επικοινωνήσω μαζί σας το συντομότερο δυνατό,
+                    για να συζητήσουμε τι σας απασχολεί και πώς μπορούμε να συνεργαστούμε.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-3xl border border-lux-200 shadow-soft p-8 md:p-12 reveal delay-100">
+                <form id="interest-form" action="https://formspree.io/f/mwlkrpdp" method="POST" novalidate>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="if-name" class="block text-xs font-bold text-lux-taupe uppercase tracking-widest mb-3">Ονοματεπώνυμο *</label>
+                            <input id="if-name" name="name" type="text" required autocomplete="name" placeholder="Το όνομά σας" class="lux-input">
+                        </div>
+                        <div>
+                            <label for="if-phone" class="block text-xs font-bold text-lux-taupe uppercase tracking-widest mb-3">Τηλέφωνο *</label>
+                            <input id="if-phone" name="phone" type="tel" required autocomplete="tel" placeholder="69… " class="lux-input">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="if-email" class="block text-xs font-bold text-lux-taupe uppercase tracking-widest mb-3">Email *</label>
+                            <input id="if-email" name="email" type="email" required autocomplete="email" placeholder="onoma@email.gr" class="lux-input">
+                        </div>
+                        <div>
+                            <label for="if-subject" class="block text-xs font-bold text-lux-taupe uppercase tracking-widest mb-3">Τι σας ενδιαφέρει</label>
+                            <select id="if-subject" name="subject" class="lux-input">
+                                <option>Ατομική ψυχοθεραπεία</option>
+                                <option>Άγχος, κρίσεις πανικού &amp; κατάθλιψη</option>
+                                <option>Ψυχοθεραπεία παιδιών &amp; εφήβων</option>
+                                <option>Διαπροσωπικές σχέσεις &amp; θεραπεία ζεύγους</option>
+                                <option>Κοινωνική μέριμνα &amp; προσβασιμότητα</option>
+                                <option>Δεν είμαι σίγουρος/η ακόμη</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="if-mode" class="block text-xs font-bold text-lux-taupe uppercase tracking-widest mb-3">Τρόπος συνεδρίας</label>
+                            <select id="if-mode" name="mode" class="lux-input">
+                                <option>Δια ζώσης, στο γραφείο</option>
+                                <option>Διαδικτυακά (online)</option>
+                                <option>Ό,τι βολεύει καλύτερα</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="if-message" class="block text-xs font-bold text-lux-taupe uppercase tracking-widest mb-3">Το μήνυμά σας <span class="font-light normal-case tracking-normal text-lux-500">(προαιρετικά)</span></label>
+                            <textarea id="if-message" name="message" rows="4" placeholder="Πείτε μου με δυο λόγια τι σας φέρνει εδώ ή πότε σας βολεύει να μιλήσουμε." class="lux-input resize-y"></textarea>
+                        </div>
+                    </div>
+
+                    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden">
+                    <input type="hidden" name="_subject" value="Νέο ενδιαφέρον από το site — Δήμητρα Μπότσογλου">
+
+                    <label for="if-consent" class="flex items-start gap-3 mt-8 cursor-pointer">
+                        <input id="if-consent" name="consent" type="checkbox" required value="Ναι" class="mt-1 w-4 h-4 accent-lux-900 shrink-0">
+                        <span class="text-sm text-lux-600 font-light leading-relaxed">Συμφωνώ να χρησιμοποιηθούν τα στοιχεία μου αποκλειστικά για να επικοινωνήσουμε σχετικά με το αίτημά μου.</span>
+                    </label>
+
+                    <button type="submit" id="if-submit" class="mt-8 w-full px-10 py-4 bg-lux-900 text-white rounded-full text-sm font-bold uppercase tracking-widest hover:bg-lux-taupe transition-all shadow-xl hover:shadow-glow flex items-center justify-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed">
+                        <span id="if-submit-text">Αποστολη</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+
+                    <p id="if-status" class="mt-5 text-center text-sm font-light hidden"></p>
+                </form>
+
+                <div id="if-success" class="hidden text-center py-10">
+                    <div class="w-16 h-16 mx-auto mb-7 rounded-full bg-lux-100 flex items-center justify-center">
+                        <i data-lucide="check" class="w-8 h-8 text-lux-900"></i>
+                    </div>
+                    <h3 class="text-3xl font-serif font-bold text-lux-900 mb-4">Ευχαριστώ για το μήνυμά σας</h3>
+                    <p class="text-lux-600 font-light leading-relaxed max-w-md mx-auto">
+                        Το έλαβα και θα επικοινωνήσω μαζί σας το συντομότερο δυνατό.
+                        Αν το θέμα σας είναι επείγον, μπορείτε να με καλέσετε απευθείας στο
+                        <a href="tel:+306980717853" class="text-lux-900 font-medium border-b border-lux-300 hover:border-lux-900 transition-colors">698 071 7853</a>.
+                    </p>
+                </div>
+            </div>
+
+            <p class="text-center text-xs text-lux-500 font-light mt-8 reveal delay-200">
+                Ό,τι μοιραστείτε παραμένει απολύτως εμπιστευτικό.
+            </p>
+        </div>
+    </section>
+ 
     <!-- Contact / Footer Section -->
-    <footer id="contact" class="bg-white text-lux-900 pt-32 pb-12 relative overflow-hidden border-t border-lux-200">
+    <footer id="details" class="bg-white text-lux-900 pt-32 pb-12 relative overflow-hidden border-t border-lux-200">
         <div class="max-w-7xl mx-auto px-6 relative z-10">
             <div class="grid md:grid-cols-2 lg:grid-cols-12 gap-16 mb-20">
                 
@@ -705,6 +811,54 @@
     <script>
         // 1. Initialize Lucide Icons
         lucide.createIcons();
+ 
+        // 1b. Interest form → Formspree (sent in the background, no page change)
+        (function () {
+            const form = document.getElementById('interest-form');
+            if (!form) return;
+            const btn = document.getElementById('if-submit');
+            const btnText = document.getElementById('if-submit-text');
+            const status = document.getElementById('if-status');
+            const success = document.getElementById('if-success');
+
+            const say = (msg, ok) => {
+                status.textContent = msg;
+                status.className = 'mt-5 text-center text-sm font-light ' + (ok ? 'text-lux-700' : 'text-red-700');
+            };
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (!form.reportValidity()) return;
+
+                btn.disabled = true;
+                btnText.textContent = 'Αποστολή…';
+                status.classList.add('hidden');
+
+                try {
+                    const res = await fetch(form.action, {
+                        method: 'POST',
+                        body: new FormData(form),
+                        headers: { Accept: 'application/json' }
+                    });
+                    if (res.ok) {
+                        form.classList.add('hidden');
+                        success.classList.remove('hidden');
+                        lucide.createIcons();
+                        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        return;
+                    }
+                    const data = await res.json().catch(() => null);
+                    const detail = data && Array.isArray(data.errors) ? data.errors.map(x => x.message).join(', ') : '';
+                    say(detail || 'Κάτι πήγε στραβά κατά την αποστολή. Δοκιμάστε ξανά ή καλέστε στο 698 071 7853.', false);
+                } catch (err) {
+                    say('Δεν ήταν δυνατή η αποστολή — ελέγξτε τη σύνδεσή σας ή καλέστε στο 698 071 7853.', false);
+                }
+
+                status.classList.remove('hidden');
+                btn.disabled = false;
+                btnText.textContent = 'Αποστολη';
+            });
+        })();
  
         // 2. Mobile Menu Toggle
         const mobileBtn = document.getElementById('mobile-menu-btn');
